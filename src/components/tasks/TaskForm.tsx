@@ -123,13 +123,14 @@ const TaskForm: React.FC<TaskFormProps> = ({
       <div className={styles.taskForm}>
         <div className='flex flex-column gap-3'>
           <div className="z-field">
-            <Label htmlFor="email" isRequired={true}>Title</Label>
+            <Label htmlFor="title" isRequired={true}>Title</Label>
             <InputText
-              id="email"
+              id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="A new title"
               autoFocus
+              data-testid="title-input"
             />
             <InputErrorMessage error={errors.title} />
           </div>
