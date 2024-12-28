@@ -1,0 +1,152 @@
+:root {
+  --font-family: "Open Sans", serif;
+  --primary-color: #016BB8;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: #f4f4f4;
+}
+
+.z-field {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+
+  label {
+    color: var(--surface-900);
+    font-size: .75rem;
+    font-weight: 600;
+    line-height: 1.125rem;
+  }
+
+  input,
+  textarea {
+    color: var(--surface-600);
+    font-size: .75rem;
+    border-radius: 8px;
+    border: 1px solid var(--surface-300);
+    font-weight: 500;
+    background-color: var(--surface-ground);
+    box-shadow: none !important;
+
+    &:focus {
+      border: 1px solid var(--primary-color);
+    }
+  }
+
+  .p-password {
+    flex: 1 1 0%;
+    display: flex;
+
+    .p-icon-field {
+      width: 100%;
+
+      input {
+        width: 100%;
+      }
+    }
+  }
+
+  .p-dropdown {
+    border: 1px solid var(--surface-300);
+    border-radius: 8px;
+    box-shadow: none !important;
+
+    .p-dropdown-label {
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--surface-600);
+    }
+
+    &:focus {
+      border: 1px solid var(--primary-color);
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+      margin-top: 3px;
+    }
+  }
+}
+
+button {
+    box-shadow: none !important;
+    font-size: .75rem;
+}
+
+.p-inline-message {
+  border-radius: .375rem;
+  border-width: 0 0 0 6px !important;
+  width: 100%;
+  justify-content: left;
+
+  span {
+    font-size: .75rem;
+    color: var(--surface-500);
+  }
+
+  &.p-inline-message-info {
+    background-color: #EFF6FF;
+    border: 1px solid #0078d4;
+  }
+}
+
+.p-toast-message {
+  border: 1px solid #FF4D4F;
+  border-width: 0 0 0 6px;
+
+  .p-toast-message-content {
+    align-items: center;
+    padding: .7rem;
+
+    .p-toast-summary {
+      font-size: .875rem;
+    }
+
+    .p-toast-detail {
+      margin: .2rem 0 0;
+      font-size: .75rem;
+    }
+
+    svg {
+      path {
+        fill: #FF4D4F;
+      }
+    }
+  }
+}
+
+.p-dropdown-panel {
+  .p-dropdown-items {
+    li {
+      padding: .5rem;
+
+      span {
+        font-size: .875rem;
+      }
+    }
+  }
+}
+
+.p-error {
+  color: #FF4D4F;
+}
+
+.p-confirm-dialog {
+  max-width: 600px;
+
+  .p-dialog-title {
+    font-size: 1rem;
+  }
+
+  .p-confirm-dialog-icon {
+    font-size: 1rem;
+  }
+
+  .p-confirm-dialog-message {
+    font-size: .875rem;
+  }
+}

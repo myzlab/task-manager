@@ -1,0 +1,16 @@
+.bg-gradient {
+    background-image:
+        url('/bg-pattern.png'),
+        linear-gradient(135deg, #319FE8, var(--primary-color));
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.login-card {
+    border-radius: 12px;
+    padding: 2rem;
+    background: #ffffff;
+    width: 350px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+}
