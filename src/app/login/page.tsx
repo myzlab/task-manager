@@ -7,24 +7,21 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import InfoMessage from '@/components/util/InfoMessage';
 import ToastWrapper, { ToastHandler } from '@/components/util/ToastWrapper';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '@/app/store/auth-slice';
-import { RootState } from '../store';
-import './styles.scss';
 import { authApi } from '@/api/auth-api';
 import Label from '@/components/util/Label';
 import InputErrorMessage from '@/components/util/InputErrorMessage';
+import { useAuthService } from '@/services/auth-service';
+import './styles.scss';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('admin@example.com');
     const [password, setPassword] = useState('1234');
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
     const toastRef = useRef<ToastHandler>(null);
-    const dispatch = useDispatch();
-
-    const token = useSelector((state: RootState) => state.auth.token);
+    const { loginUser, getToken } = useAuthService();
+    const router = useRouter();
+    const token = getToken();
 
     React.useEffect(() => {
         if (token) {
@@ -53,9 +50,7 @@ export default function LoginPage() {
         try {
             const response = await authApi.login(email, password);
 
-            dispatch(login(response.token));
-
-            router.push('/tasks');
+            loginUser(response.token);
         } catch (error: unknown) {
             if (!(error instanceof Error)) {
                 return;

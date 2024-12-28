@@ -1,27 +1,26 @@
 'use client';
 
-import { useDispatch, useSelector } from "react-redux";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { RootState } from "../store";
 import { Button } from "primereact/button";
 import { taskApi } from "@/api/task-api";
-import { removeTask, Task } from "../store/tasks-slice";
+import { Task } from "../store/tasks-slice";
 import TaskStatus from "@/components/tasks/TaskStatus";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Skeleton } from 'primereact/skeleton';
 import ToastWrapper, { ToastHandler } from "@/components/util/ToastWrapper";
 import Image from 'next/image';
+import { useAuthService } from "@/services/auth-service";
 
 export default function TasksList() {
-  const token = useSelector((state: RootState) => state.auth.token);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const confirmDialogRef = useRef(null);
   const toastRef = useRef<ToastHandler>(null);
 
   const router = useRouter();
-  const dispatch = useDispatch();
+  const { getToken } = useAuthService();
+  const token = getToken();
 
   React.useEffect(() => {
     if (!token) {
@@ -70,10 +69,22 @@ export default function TasksList() {
       icon: 'pi pi-trash',
       defaultFocus: 'reject',
       acceptClassName: 'p-button-danger',
-      accept: () => {
-        dispatch(removeTask(task.id));
+      accept: async () => {
+        try {
+          await taskApi.removeTaskById(task);
 
-        fetchTasks();
+          fetchTasks();
+        } catch (error: unknown) {
+          if (!(error instanceof Error)) {
+              return;
+          }
+
+          toastRef.current?.showMessage({
+              severity: 'error',
+              summary: 'Error',
+              detail: error.message
+          });
+        }
       },
       reject: () => {}
     });

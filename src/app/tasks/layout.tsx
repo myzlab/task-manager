@@ -3,19 +3,10 @@
 import React from 'react';
 import './tasks.scss';
 import { Button } from 'primereact/button';
-import { useDispatch } from 'react-redux';
-import { logout } from '../store/auth-slice';
-import { useRouter } from 'next/navigation';
+import { useAuthService } from '@/services/auth-service';
 
 const TasksLayout = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-
-  const handleLogout = async () => {
-    dispatch(logout());
-
-    router.push('/login');
-};
+  const { logoutUser } = useAuthService();
 
   return (
     <div>
@@ -26,7 +17,7 @@ const TasksLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="flex flex-1 justify-content-end">
           <Button
               label="Sign out"
-              onClick={handleLogout}
+              onClick={logoutUser}
             />
         </div>
       </div>

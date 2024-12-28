@@ -1,5 +1,5 @@
 import { store } from "@/app/store";
-import { addTask, Task, updateTask } from "@/app/store/tasks-slice";
+import { addTask, removeTask, Task, updateTask } from "@/app/store/tasks-slice";
 
 export const taskApi = {
   getTasks: async (): Promise<{ tasks: Task[] }> => {
@@ -40,5 +40,18 @@ export const taskApi = {
     await new Promise((resolve) => setTimeout(resolve, 250));
     
     store.dispatch(addTask(task));
-  }
+  },
+  removeTaskById: async (task: Task): Promise<void> => {
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
+    const state = store.getState();
+
+    const index = state.tasks.tasks.findIndex((task) => task.id === task.id);
+
+    if (index === -1) {
+      throw new Error('Task not found');
+    }
+
+    store.dispatch(removeTask(task.id));
+  },
 };
