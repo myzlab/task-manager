@@ -97,7 +97,7 @@ export default function TasksList() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3 justify-content-center">
+      <div className="flex flex-wrap gap-3 justify-content-center mt-3">
         {loading ? (
           <>
             {[...Array(5)].map((_, index) => (
