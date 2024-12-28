@@ -33,20 +33,20 @@ const TaskForm: React.FC<TaskFormProps> = ({
       return;
     }
 
+    const fetchTask = async () => {
+      try {
+        const task: Task = (await taskApi.getTaskById(id)).task;
+  
+        setTitle(task.title);
+        setDescription(task.description);
+        setStatus(task.status);
+      } catch {
+        router.push('/404');
+      }
+    };
+
     fetchTask();
-  }, [ id ]);
-
-  const fetchTask = async () => {
-    try {
-      const task: Task = (await taskApi.getTaskById(id)).task;
-
-      setTitle(task.title);
-      setDescription(task.description);
-      setStatus(task.status);
-    } catch {
-      router.push('/404');
-    }
-  };
+  }, [ id, router ]);
 
   const statusOptions = [
     { label: 'To do', value: 'To do' },
