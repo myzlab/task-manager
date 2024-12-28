@@ -30,7 +30,7 @@ const TasksLayout = ({ children }: { children: React.ReactNode }) => {
             />
         </div>
       </div>
-      <div className="content pb-2 px-5">
+      <div className="content pb-5 px-5">
         {children}
       </div>
     </div>
