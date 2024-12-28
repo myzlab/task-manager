@@ -13,10 +13,12 @@ import { RootState } from '../store';
 import './styles.scss';
 import { authApi } from '@/api/auth-api';
 import Label from '@/components/util/Label';
+import InputErrorMessage from '@/components/util/InputErrorMessage';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('admin@example.com');
     const [password, setPassword] = useState('1234');
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const toastRef = useRef<ToastHandler>(null);
@@ -30,7 +32,22 @@ export default function LoginPage() {
         }
     }, [router, token]);
 
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        if (!email.trim()) newErrors.email = 'Email is required';
+        if (!password.trim()) newErrors.password = 'Password is required';
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleLogin = async () => {
+        if (!validateForm()) {
+            return;
+        }
+
         setLoading(true);
 
         try {
@@ -80,6 +97,7 @@ export default function LoginPage() {
                             placeholder="example@mail.com"
                             onKeyDown={handleKeyDown}
                         />
+                        <InputErrorMessage error={errors.email} />
                     </div>
                     <div className="z-field">
                         <Label htmlFor="password">Password</Label>
@@ -92,6 +110,7 @@ export default function LoginPage() {
                             toggleMask
                             onKeyDown={handleKeyDown}
                         />
+                        <InputErrorMessage error={errors.password} />
                     </div>
                     <Button
                         label="Log in"
