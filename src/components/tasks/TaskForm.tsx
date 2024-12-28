@@ -88,9 +88,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     try {
       await handleOperation(task);
 
-      setTimeout(() => {
-        handleOnBackToList();
-      }, 200);
+      handleOnBackToList();
     } catch (error: unknown) {
       if (!(error instanceof Error)) {
           return;

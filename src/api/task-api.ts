@@ -24,6 +24,8 @@ export const taskApi = {
     };
   },
   updateTaskById: async (task: Task): Promise<void> => {
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
     const state = store.getState();
 
     const index = state.tasks.tasks.findIndex((task) => task.id === task.id);
@@ -35,6 +37,8 @@ export const taskApi = {
     store.dispatch(updateTask(task));
   },
   createTask: async (task: Task): Promise<void> => {
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    
     store.dispatch(addTask(task));
   }
 };
