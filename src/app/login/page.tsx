@@ -28,7 +28,7 @@ export default function LoginPage() {
         if (token) {
             router.push('/tasks');
         }
-    }, []);
+    }, [router, token]);
 
     const handleLogin = async () => {
         setLoading(true);
@@ -39,7 +39,11 @@ export default function LoginPage() {
             dispatch(login(response.token));
 
             router.push('/tasks');
-        } catch (error: any) {
+        } catch (error: unknown) {
+            if (!(error instanceof Error)) {
+                return;
+            }
+
             toastRef.current?.showMessage({
                 severity: 'error',
                 summary: 'Error',

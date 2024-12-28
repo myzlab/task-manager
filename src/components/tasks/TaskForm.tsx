@@ -34,7 +34,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     }
 
     fetchTask();
-  }, []);
+  }, [ id ]);
 
   const fetchTask = async () => {
     try {
@@ -43,7 +43,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       setTitle(task.title);
       setDescription(task.description);
       setStatus(task.status);
-    } catch (error: any) {
+    } catch {
       router.push('/404');
     }
   };
@@ -91,11 +91,15 @@ const TaskForm: React.FC<TaskFormProps> = ({
       setTimeout(() => {
         handleOnBackToList();
       }, 200);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      if (!(error instanceof Error)) {
+          return;
+      }
+
       toastRef.current?.showMessage({
-        severity: 'error',
-        summary: 'Error',
-        detail: error.message
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message
       });
     } finally {
       setLoading(false);

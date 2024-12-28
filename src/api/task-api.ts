@@ -35,8 +35,6 @@ export const taskApi = {
     store.dispatch(updateTask(task));
   },
   createTask: async (task: Task): Promise<void> => {
-    const state = store.getState();
-    
     store.dispatch(addTask(task));
   }
 };

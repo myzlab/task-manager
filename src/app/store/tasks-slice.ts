@@ -5,7 +5,7 @@ export interface Task {
   id: string;
   title: string;
   description: string;
-  status: 'To do' | 'In Progress' | 'Completed'; // Cambiado a string con valores específicos
+  status: 'To do' | 'In Progress' | 'Completed';
 }
 
 interface TasksState {

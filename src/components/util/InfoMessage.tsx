@@ -1,5 +1,6 @@
 import React from 'react';
 import { Message } from 'primereact/message';
+import Image from 'next/image';
 
 interface InfoMessageProps {
     html: string;
@@ -8,7 +9,13 @@ interface InfoMessageProps {
 const InfoMessage: React.FC<InfoMessageProps> = ({ html }) => {
     const content = (
         <div className="flex align-items-center">
-            <img alt="logo" src="/info.png" width="24" />
+            <Image
+                src="/info.png"
+                alt="Info"
+                width={24}
+                height={0}
+                style={{ height: 'auto' }}
+            />
             <span
                 className="ml-2"
                 dangerouslySetInnerHTML={{ __html: html }}

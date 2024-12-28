@@ -5,7 +5,7 @@ export interface ToastMessage {
     severity: 'success' | 'info' | 'warn' | 'error';
     summary: string;
     detail: string;
-    life?: number; // Opcional: duración del mensaje
+    life?: number;
 }
 
 export interface ToastHandler {
@@ -15,7 +15,6 @@ export interface ToastHandler {
 const ToastWrapper = forwardRef<ToastHandler>((_, ref) => {
     const toast = useRef<Toast>(null);
 
-    // Exponer métodos a través de la referencia
     useImperativeHandle(ref, () => ({
         showMessage(message: ToastMessage) {
             toast.current?.show(message);
@@ -24,5 +23,7 @@ const ToastWrapper = forwardRef<ToastHandler>((_, ref) => {
 
     return <Toast ref={toast} />;
 });
+
+ToastWrapper.displayName = 'ToastWrapper';
 
 export default ToastWrapper;

@@ -11,6 +11,7 @@ import TaskStatus from "@/components/tasks/TaskStatus";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Skeleton } from 'primereact/skeleton';
 import ToastWrapper, { ToastHandler } from "@/components/util/ToastWrapper";
+import Image from 'next/image';
 
 export default function TasksList() {
   const token = useSelector((state: RootState) => state.auth.token);
@@ -28,7 +29,7 @@ export default function TasksList() {
     }
     
     fetchTasks();
-  }, []);
+  }, [router, token]);
 
   const fetchTasks = async () => {
     setLoading(true);
@@ -37,7 +38,11 @@ export default function TasksList() {
       const tasks: Task[] = (await taskApi.getTasks()).tasks;
 
       setTasks(tasks);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      if (!(error instanceof Error)) {
+          return;
+      }
+
       toastRef.current?.showMessage({
           severity: 'error',
           summary: 'Error',
@@ -46,10 +51,6 @@ export default function TasksList() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleToggle = (id: string) => {
-    // dispatch(toggleTask(id));  // Cambiar el estado de la tarea (completada/no completada)
   };
 
   const handleOnCreate = async () => {
@@ -107,7 +108,13 @@ export default function TasksList() {
           </>
         ) : tasks.length === 0 ? (
           <div className="flex flex-column text-center text-sm font-medium">
-            <img src="/no-records.png" alt="No tasks" style={{ width: '200px', height: 'auto' }} />
+            <Image
+              src="/no-records.png"
+              alt="No tasks"
+              width={200}
+              height={0}
+              style={{ height: 'auto' }}
+            />
             No tasks
           </div>
         ) : (
@@ -116,7 +123,6 @@ export default function TasksList() {
               <div
                 key={task.id}
                 className="task-card px-3 pt-3 pb-2"
-                onClick={() => handleToggle(task.id)}
               >
                 <div className="task-title text-sm font-semibold mb-1">
                   {task.title}
