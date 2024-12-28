@@ -10,8 +10,7 @@ const TasksLayout = ({ children }: { children: React.ReactNode }) => {
   const { logoutUser } = useAuthService();
   
   const router = useRouter();
-  const { getToken } = useAuthService();
-  const token = getToken();
+  const { token } = useAuthService();
 
   React.useEffect(() => {
     if (!token) {

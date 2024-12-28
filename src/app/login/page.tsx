@@ -19,9 +19,8 @@ export default function LoginPage() {
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(false);
     const toastRef = useRef<ToastHandler>(null);
-    const { loginUser, getToken } = useAuthService();
+    const { loginUser, token } = useAuthService();
     const router = useRouter();
-    const token = getToken();
 
     React.useEffect(() => {
         if (token) {
@@ -77,7 +76,7 @@ export default function LoginPage() {
             <ToastWrapper ref={toastRef} />
             <div className="login-card">
                 <div className="mb-3 text-center font-semibold">
-                    Log in
+                    Welcome to task manager
                 </div>
                 <div className="mb-3">
                     <InfoMessage html={"Use <b>admin@example.com</b> and <b>1234</b>"} />
@@ -91,6 +90,7 @@ export default function LoginPage() {
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="example@mail.com"
                             onKeyDown={handleKeyDown}
+                            data-testid="email-input"
                         />
                         <InputErrorMessage error={errors.email} />
                     </div>
@@ -104,6 +104,7 @@ export default function LoginPage() {
                             feedback={false}
                             toggleMask
                             onKeyDown={handleKeyDown}
+                            data-testid="password-input"
                         />
                         <InputErrorMessage error={errors.password} />
                     </div>
