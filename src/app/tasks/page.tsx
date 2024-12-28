@@ -10,7 +10,6 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Skeleton } from 'primereact/skeleton';
 import ToastWrapper, { ToastHandler } from "@/components/util/ToastWrapper";
 import Image from 'next/image';
-import { useAuthService } from "@/services/auth-service";
 
 export default function TasksList() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -19,16 +18,10 @@ export default function TasksList() {
   const toastRef = useRef<ToastHandler>(null);
 
   const router = useRouter();
-  const { getToken } = useAuthService();
-  const token = getToken();
 
   React.useEffect(() => {
-    if (!token) {
-      router.push('/login');
-    }
-    
     fetchTasks();
-  }, [router, token]);
+  }, [router]);
 
   const fetchTasks = async () => {
     setLoading(true);

@@ -4,9 +4,20 @@ import React from 'react';
 import './tasks.scss';
 import { Button } from 'primereact/button';
 import { useAuthService } from '@/services/auth-service';
+import { useRouter } from 'next/navigation';
 
 const TasksLayout = ({ children }: { children: React.ReactNode }) => {
   const { logoutUser } = useAuthService();
+  
+  const router = useRouter();
+  const { getToken } = useAuthService();
+  const token = getToken();
+
+  React.useEffect(() => {
+    if (!token) {
+      router.push('/login');
+    }
+  }, [router, token]);
 
   return (
     <div>
